@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <title>Tracker</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div id="root">
+      <h1>Tracker</h1>
+
+      <ul id="list"></ul>
+
+      <button type="button" name="add" id="add-ele">Add</button>
+      <!-- for the popup -->
+      <div id="addPrompt" class="modal">
+        <div class="modal-content">
+          <div class="wrapper">
+            <label for="">Link<input type="text" name="link"/></label>
+
+            <label for="">Title<input type="text" name="title"/></label>
+
+            <input
+              type="number"
+              name="currNum"
+              placeholder="Current video #"
+              min="1"
+            />
+            <label>/</label>
+            <input
+              type="number"
+              name="totalNum"
+              placeholder="Total video #"
+              min="1"
+            />
+            <!-- max is the total video entered. How to check this? -->
+          </div>
+          <button type="button" name="done" id="done-add">Done</button>
+        </div>
+      </div>
+    </div>
+    <script src="./main.js"></script>
+  </body>
+</html>
