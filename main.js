@@ -9,36 +9,33 @@ const list = document.getElementById("list"); // list of videos
 const allInput = document.querySelectorAll("input"); // array of all the input tags
 
 // creates one element to be added to "list"
-
 function createListElement() {
-  let title_anchor = document.createElement("a");
+  let title_anchor = document.createElement("a"); // sets the link part
   title_anchor.setAttribute("href", allInput[0].value);
   title_anchor.textContent = allInput[1].value;
 
+  //sets the title part
   let currSpan = document.createElement("span");
   currSpan.textContent = allInput[2].value;
 
+  // sets the counting part
   let p = document.createElement("p");
   let text_node = document.createTextNode(` out of ${allInput[3].value}`);
-
   p.appendChild(currSpan);
   p.appendChild(text_node);
 
-  const addFn = function() {
-    currSpan.textContent = parseInt(currSpan.textContent) + 1;
-  };
-
-  const subFn = function() {
-    currSpan.textContent = parseInt(currSpan.textContent) - 1;
-  };
-
+  //increment or decrements the number of current videos watched
   let plus = document.createElement("button");
   plus.textContent = "+";
-  plus.addEventListener("click", addFn);
+  plus.addEventListener("click", function() {
+    currSpan.textContent = parseInt(currSpan.textContent) + 1;
+  });
 
   let minus = document.createElement("button");
   minus.textContent = "-";
-  minus.addEventListener("click", subFn);
+  minus.addEventListener("click", function() {
+    currSpan.textContent = parseInt(currSpan.textContent) - 1;
+  });
 
   let li = document.createElement("li");
   li.appendChild(title_anchor);
