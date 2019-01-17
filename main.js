@@ -3,7 +3,7 @@ const root = document.getElementById("root"); // wrapper for everything
 
 const addPrompt = document.getElementById("addPrompt"); // background for popup
 const done_add = document.getElementById("done-add"); //done button in the popup for adding
-const close_add = document.getElementById("close-add");
+const close_add = document.getElementById("close-add"); // closes the entire form
 
 const list = document.getElementById("list"); // list of videos
 
@@ -57,6 +57,7 @@ const fillTitle = () => {
   allInput[1].value = name;
 };
 
+// function for displaying errors
 const displayError = (link, title, currVid, totalVid) => {
   if (link.length <= 0) {
     error.textContent = "Please fill out link field!";
@@ -123,14 +124,18 @@ done_add.addEventListener("click", function() {
     let li = createListElement(link, title, currVid, totalVid);
     list.appendChild(li);
     error.style.visibility = "hidden";
-    link = allInput[0].value;
-    title = allInput[1].value;
-    currVid = allInput[2].value;
-    totalVid = allInput[3].value;
+    allInput[0].value = "";
+    allInput[1].value = "";
+    allInput[2].value = "";
+    allInput[3].value = "";
   } else {
     // display error
     displayError(link, title, currVid, totalVid);
   }
+});
+
+close_add.addEventListener("click", function() {
+  addPrompt.style.display = "none";
 });
 
 /*
