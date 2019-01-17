@@ -8,6 +8,10 @@ input {
   margin-bottom: 20px;
 }
 
+.error {
+  visibility: hidden;
+}
+
 .wrapper {
   text-align: center;
 }
