@@ -1,3 +1,5 @@
+const TOTAL_SECONDS = 60;
+
 const add = document.getElementById("add-ele"); // triggers prompt to add a new entry
 const root = document.getElementById("root"); // wrapper for everything
 
@@ -73,6 +75,8 @@ const displayError = (link, title, currVid, totalVid) => {
 
 // creates one element to be added to "list"
 const createListElement = (link, title, currVid, totalVid) => {
+  const step = 400 / +totalVid;
+
   let title_anchor = createComponent("a", { href: link }, title);
 
   //sets the title part
@@ -83,19 +87,28 @@ const createListElement = (link, title, currVid, totalVid) => {
   let text_node = document.createTextNode(` out of ${totalVid}`);
   addChildren(p, currSpan, text_node);
 
+  let progress = createComponent("div", { class: "progress" });
+  let fill = createComponent("div", { class: "fill" });
+  fill.style.width = +fill.offsetWidth + +currVid * step + "px";
+  addChildren(progress, fill);
+
   let plus = createComponent("button", {}, "+");
   plus.addEventListener("click", () => {
     if (+currVid < +totalVid) {
       currVid = +currVid + 1;
       currSpan.textContent = currVid;
+      fill.style.width = +fill.offsetWidth + step + "px";
+      console.log(fill.offsetWidth);
     }
   });
 
   let minus = createComponent("button", {}, "-");
   minus.addEventListener("click", () => {
-    if (+currVid > 1) {
+    if (+currVid > 0) {
       currVid = +currVid - 1;
       currSpan.textContent = currVid;
+      fill.style.width = +fill.offsetWidth - step + "px";
+      console.log(fill.offsetWidth);
     }
   });
 
@@ -105,8 +118,7 @@ const createListElement = (link, title, currVid, totalVid) => {
   });
 
   let li = createComponent("li");
-  addChildren(li, remove, title_anchor, p, plus, minus);
-
+  addChildren(li, remove, title_anchor, p, progress, plus, minus);
   return li;
 };
 
@@ -137,6 +149,17 @@ done_add.addEventListener("click", function() {
 close_add.addEventListener("click", function() {
   addPrompt.style.display = "none";
 });
+/*let startProgress = setInterval(increment, 10);
+function increment() {
+  const fill = document.querySelector(".fill");
+  fill.style.width = +fill.offsetWidth + 1 + "px";
+  console.log(fill.offsetWidth);
+  if (fill.offsetWidth === 400) stopProgress();
+}
+
+function stopProgress() {
+  clearInterval(startProgress);
+}*/
 
 /*
 IDEA

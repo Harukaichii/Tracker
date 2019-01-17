@@ -8,6 +8,18 @@ input {
   margin-bottom: 20px;
 }
 
+.progress {
+  height: 20px;
+  width: 400px;
+  background-color: black;
+}
+
+.fill {
+  background-color: red;
+  height: 20px;
+  width: 0px;
+}
+
 .error {
   visibility: hidden;
 }
