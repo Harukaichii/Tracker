@@ -3,10 +3,22 @@ const root = document.getElementById("root"); // wrapper for everything
 
 const addPrompt = document.getElementById("addPrompt"); // background for popup
 const done_add = document.getElementById("done-add"); //done button in the popup for adding
+const close_add = document.getElementById("close-add");
 
 const list = document.getElementById("list"); // list of videos
 
 const allInput = document.querySelectorAll("input"); // array of all the input tags
+
+const error = document.querySelector(".error"); // gets error msg
+
+const addFormValidate = (link, title, currVid, totalVid) => {
+  return link.length > 0 && title.length > 0 && +currVid <= +totalVid;
+};
+
+const isWebsiteDomain = value => {
+  const domain = new RegExp(".?(com|org|ca|net)$"); // TODO: maybe find better way of doing this?
+  return domain.test(value);
+};
 
 // makes a new component
 //params : type, attribute(Object), text values
@@ -31,8 +43,31 @@ const addChildren = (parent, ...children) => {
   }
 };
 
-const addFormValidate = (link, title, currVid, totalVid) => {
-  return link.length > 0 && title.length > 0 && +currVid <= +totalVid;
+// fills the Title field based on the input
+const fillTitle = () => {
+  let url = allInput[0].value === undefined ? "" : allInput[0].value.split("/");
+
+  let words = url.filter(function(value) {
+    return value.length > 0 && !isWebsiteDomain(value);
+  });
+
+  let name = words[words.length - 1];
+  name = name.split("-").join(" ");
+
+  allInput[1].value = name;
+};
+
+const displayError = (link, title, currVid, totalVid) => {
+  if (link.length <= 0) {
+    error.textContent = "Please fill out link field!";
+  } else if (title.length <= 0) {
+    error.textContent = "Please fill out title field!";
+  } else {
+    error.textContent =
+      "Current video number or total video number is not valid!";
+  }
+
+  error.style.visibility = "visible";
 };
 
 // creates one element to be added to "list"
@@ -63,12 +98,12 @@ const createListElement = (link, title, currVid, totalVid) => {
     }
   });
 
-  let li = createComponent("li");
   let remove = createComponent("button", { id: "remove" }, "X");
   remove.addEventListener("click", function() {
     this.parentNode.parentNode.removeChild(this.parentNode);
   });
 
+  let li = createComponent("li");
   addChildren(li, remove, title_anchor, p, plus, minus);
 
   return li;
@@ -87,8 +122,14 @@ done_add.addEventListener("click", function() {
     addPrompt.style.display = "none";
     let li = createListElement(link, title, currVid, totalVid);
     list.appendChild(li);
+    error.style.visibility = "hidden";
+    link = allInput[0].value;
+    title = allInput[1].value;
+    currVid = allInput[2].value;
+    totalVid = allInput[3].value;
   } else {
     // display error
+    displayError(link, title, currVid, totalVid);
   }
 });
 

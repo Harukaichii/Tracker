@@ -17,9 +17,11 @@
         <div class="modal-content">
           <div class="wrapper">
             <div class="error">Error! Improperly entered field</div>
-            <label for="">Link<input type="text" name="link"/></label>
+            <label
+              >Link<input type="text" name="link" onblur="fillTitle()"
+            /></label>
 
-            <label for="">Title<input type="text" name="title"/></label>
+            <label>Title<input type="text" name="title"/></label>
 
             <input
               type="number"
@@ -34,7 +36,8 @@
               placeholder="Total video #"
               min="1"
             />
-            <!-- max is the total video entered. How to check this? -->
+
+            <button type="button" name="close" id="close-add-button">X</button>
           </div>
           <button type="button" name="done" id="done-add">Done</button>
         </div>
